@@ -325,8 +325,8 @@ export default class TaggingControls {
 
 	showControls(target: HTMLElement) {
 		const { left, top, height } = target.getBoundingClientRect();
-		const topRounded = (top + height + window.scrollX).toFixed(0);
-		const leftRounded = (left + window.scrollY).toFixed(0);
+		const topRounded = (top + height + window.scrollY).toFixed(0);
+		const leftRounded = (left + window.scrollX).toFixed(0);
 		this.elements.containers.controls.style.setProperty('--top', `${topRounded}px`);
 		this.elements.containers.controls.style.setProperty('--left', `${leftRounded}px`);
 		document.body.appendChild(this.elements.containers.controls);

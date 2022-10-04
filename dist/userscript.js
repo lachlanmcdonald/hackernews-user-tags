@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         HackerNews Tag User
-// @version      0.1
+// @version      0.2
 // @description  Add custom tags/flair to a user on HackerNews
 // @author       Lachlan McDonald <https://twitter.com/lachlanmcdonald>
 // @match        https://news.ycombinator.com/*
@@ -254,8 +254,8 @@ class TaggingControls {
     }
     showControls(target) {
         const { left, top, height } = target.getBoundingClientRect();
-        const topRounded = (top + height + window.scrollX).toFixed(0);
-        const leftRounded = (left + window.scrollY).toFixed(0);
+        const topRounded = (top + height + window.scrollY).toFixed(0);
+        const leftRounded = (left + window.scrollX).toFixed(0);
         this.elements.containers.controls.style.setProperty('--top', `${topRounded}px`);
         this.elements.containers.controls.style.setProperty('--left', `${leftRounded}px`);
         document.body.appendChild(this.elements.containers.controls);
