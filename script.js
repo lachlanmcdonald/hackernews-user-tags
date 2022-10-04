@@ -40,7 +40,7 @@ class TaggingControls {
 		this.elements = {};
 		this.currentUsername = null;
 		this.isOpen = false;
-		this.ownUsername = document.getElementById('me').textContent;
+		this.ownUsername = null;
 		this.setup();
 	}
 
@@ -56,6 +56,9 @@ class TaggingControls {
 	}
 
 	setup() {
+		const ownProfileLink = document.getElementById('me');
+		this.ownUsername = ownProfileLink ? ownProfileLink.textContent.trim() : null;
+		
 		this.load().then(() => {
 			this.addStyles();
 			this.createControls();
