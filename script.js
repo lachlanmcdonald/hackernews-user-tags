@@ -73,9 +73,14 @@ class TaggingControls {
 			const username = u.searchParams.get('id');
 			if (this.tags.has(username)) {
 				const { label, color } = this.tags.get(username);
-				e.dataset.tag = label;
-				e.style.setProperty('--bg', color || TaggingControls.DefaultBackground);
-				e.classList.add(TaggingControls.CSS_CLASS);
+
+				if (label.length) {
+					e.dataset.tag = label;
+					e.style.setProperty('--bg', color || TaggingControls.DefaultBackground);
+					e.classList.add(TaggingControls.CSS_CLASS);
+				} else {
+					e.classList.add(TaggingControls.CSS_CLASS);
+				}
 			}
 		});
 	}
