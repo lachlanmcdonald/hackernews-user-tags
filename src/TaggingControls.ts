@@ -143,10 +143,10 @@ export default class TaggingControls {
 		tagInputNode.setAttribute('maxlength', '16');
 
 		saveButton.setAttribute('type', 'button');
-		saveButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="321.52 316.78 108.97 118.42"><path d="M334.36 378.89a7.106 7.106 0 0 0-9.934-1.504 7.102 7.102 0 0 0-1.503 9.934l33.148 44.988c3.019 4.097 9.246 3.785 11.836-.598l61.566-104.19a7.1 7.1 0 0 0-2.504-9.727 7.103 7.103 0 0 0-9.73 2.5l-56.103 94.941z"></path></svg>';
+		saveButton.classList.add('save');
 
 		closeButton.setAttribute('type', 'button');
-		closeButton.innerHTML = '<svg viewBox="256.17 233.43 261.45 261.45" xmlns="http://www.w3.org/2000/svg"><path d="m406.79 364.16 106.08-106.55c5.684-5.684 5.684-14.68 0-19.891-5.684-5.684-14.68-5.684-19.891 0l-106.08 106.56-106.55-106.56c-5.684-5.684-14.68-5.684-19.891 0-5.684 5.684-5.684 14.68 0 19.891l106.08 106.55-106.08 106.56c-5.684 5.684-5.684 14.68 0 19.891 2.84 2.84 6.629 4.262 9.945 4.262 3.317 0 7.106-1.422 9.946-4.262l106.55-106.55 106.55 106.55c2.84 2.84 6.628 4.262 9.945 4.262 3.316 0 7.105-1.422 9.945-4.262 5.684-5.684 5.684-14.68 0-19.891z" fill="#010101"/></svg>';
+		closeButton.classList.add('close');
 
 		controlNode.appendChild(profileNode);
 		controlNode.appendChild(tagInputNode);
@@ -202,7 +202,7 @@ export default class TaggingControls {
 			display: none;
 		}`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > input[type="text"] {
-			background: #393939;
+			background: #666;
 			color: #FFF;
 			font-family: sans-serif;
 			font-size: 8pt;
@@ -227,20 +227,25 @@ export default class TaggingControls {
 			cursor: pointer;
 			width: 20px;
 			height: 20px;
-			background: transparent;
 			border: 0;
 			appearance: none;
+			background: transparent;
+			background-size: 14px auto;
+			background-repeat: no-repeat;
+			background-position: center;
+			opacity: 0.5;
+		}`;
+		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > button:hover {
+			opacity: 1.0;
+		}`;
+		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > button.save {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='321.52 316.78 108.97 118.42'%3E%3Cpath d='M334.36 378.89a7.106 7.106 0 0 0-9.934-1.504 7.102 7.102 0 0 0-1.503 9.934l33.148 44.988c3.019 4.097 9.246 3.785 11.836-.598l61.566-104.19a7.1 7.1 0 0 0-2.504-9.727 7.103 7.103 0 0 0-9.73 2.5l-56.103 94.941z' fill='%23FFF'%3E%3C/path%3E%3C/svg%3E");
+		}`;
+		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > button.close {
+			background-image: url("data:image/svg+xml,%3Csvg viewBox='256.17 233.43 261.45 261.45' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m406.79 364.16 106.08-106.55c5.684-5.684 5.684-14.68 0-19.891-5.684-5.684-14.68-5.684-19.891 0l-106.08 106.56-106.55-106.56c-5.684-5.684-14.68-5.684-19.891 0-5.684 5.684-5.684 14.68 0 19.891l106.08 106.55-106.08 106.56c-5.684 5.684-5.684 14.68 0 19.891 2.84 2.84 6.629 4.262 9.945 4.262 3.317 0 7.106-1.422 9.946-4.262l106.55-106.55 106.55 106.55c2.84 2.84 6.628 4.262 9.945 4.262 3.316 0 7.105-1.422 9.945-4.262 5.684-5.684 5.684-14.68 0-19.891z' fill='%23FFF'/%3E%3C/svg%3E");
 		}`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > button:disabled {
 			opacity: 0.2;
-		}`;
-		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > button > svg {
-			display: block;
-			width: 12px;
-			height: 12px;
-		}`;
-		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > button > svg > path {
-			fill: #FFF;
 		}`;
 
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
