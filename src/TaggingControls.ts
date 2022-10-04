@@ -137,11 +137,11 @@ export default class TaggingControls {
 			if (this.tags.has(username)) {
 				const { label, color } = this.tags.get(username) as UserTag;
 
+				const backgroundColor = color || TaggingControls.DEFAULT_BACKGROUND;
+				const textColor = TaggingControls.luminance(backgroundColor) > 0.5 ? '#000' : '#FFF';
+
 				if (typeof label === 'string' && label.length) {
 					links.forEach(e => {
-						const backgroundColor = color || TaggingControls.DEFAULT_BACKGROUND;
-						const textColor = TaggingControls.luminance(backgroundColor) > 0.5 ? '#000' : '#FFF';
-
 						e.dataset.tag = label;
 						e.style.setProperty('--bg', backgroundColor);
 						e.style.setProperty('--color', textColor);
@@ -158,24 +158,24 @@ export default class TaggingControls {
 
 	createControls() {
 		const controlNode = document.createElement('div');
-		const profileNode = document.createElement('a');
-		const tagInputNode = document.createElement('input');
-		const colorInputNode = document.createElement('input');
+		const profileLink = document.createElement('a');
+		const labelInput = document.createElement('input');
+		const colorInput = document.createElement('input');
 		const saveButton = document.createElement('button');
 		const closeButton = document.createElement('button');
 
 		controlNode.classList.add(TaggingControls.CSS_CONTROL_CLASS);
 		controlNode.setAttribute('aria-hidden', 'true');
 
-		profileNode.setAttribute('title', 'View Profile');
-		profileNode.classList.add('profile');
-		profileNode.classList.add('button');
+		profileLink.setAttribute('title', 'View Profile');
+		profileLink.classList.add('profile');
+		profileLink.classList.add('button');
 
-		colorInputNode.setAttribute('type', 'color');
+		colorInput.setAttribute('type', 'color');
 
-		tagInputNode.setAttribute('type', 'text');
-		tagInputNode.setAttribute('placeholder', 'Tag');
-		tagInputNode.setAttribute('maxlength', '16');
+		labelInput.setAttribute('type', 'text');
+		labelInput.setAttribute('placeholder', 'Tag');
+		labelInput.setAttribute('maxlength', '16');
 
 		saveButton.setAttribute('type', 'button');
 		saveButton.setAttribute('title', 'Save');
@@ -188,11 +188,11 @@ export default class TaggingControls {
 		closeButton.classList.add('button');
 
 		const tagInputNodeContainer = document.createElement('div');
-		tagInputNodeContainer.appendChild(tagInputNode);
+		tagInputNodeContainer.appendChild(labelInput);
 		const colorInputNodeContainer = document.createElement('div');
-		colorInputNodeContainer.appendChild(colorInputNode);
+		colorInputNodeContainer.appendChild(colorInput);
 
-		controlNode.appendChild(profileNode);
+		controlNode.appendChild(profileLink);
 		controlNode.appendChild(tagInputNodeContainer);
 		controlNode.appendChild(colorInputNodeContainer);
 		controlNode.appendChild(saveButton);
@@ -201,9 +201,9 @@ export default class TaggingControls {
 		document.body.appendChild(controlNode);
 
 		this.elements.containers.controls = controlNode as HTMLDivElement;
-		this.elements.links.profile = profileNode as HTMLAnchorElement;
-		this.elements.inputs.label = tagInputNode as HTMLInputElement;
-		this.elements.inputs.color = colorInputNode as HTMLInputElement;
+		this.elements.links.profile = profileLink as HTMLAnchorElement;
+		this.elements.inputs.label = labelInput as HTMLInputElement;
+		this.elements.inputs.color = colorInput as HTMLInputElement;
 		this.elements.button.save = saveButton as HTMLButtonElement;
 		this.elements.button.close = closeButton as HTMLButtonElement;
 	}
@@ -222,26 +222,26 @@ export default class TaggingControls {
 			font-size: 7pt; }`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} {
 			z-index: 1000;
-top: var(--top);
-left: var(--left);
-position: absolute;
-background: #FFF;
-border-radius: 6px;
-box-shadow: 0px 2px 3px #00000038;
-font-size: 9pt;
-display: flex;
-flex-flow: row nowrap;
-align-items: stretch;
-overflow: hidden;
-border: solid 1px #00000038;
-align-content: center;
+			top: var(--top);
+			left: var(--left);
+			position: absolute;
+			background: #FFF;
+			border-radius: 6px;
+			box-shadow: 0px 2px 3px #00000038;
+			font-size: 9pt;
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: stretch;
+			overflow: hidden;
+			border: solid 1px #00000038;
+			align-content: center;
 		}`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > a {
 			color: #000;
-text-decoration: none;
+			text-decoration: none;
 			display: flex;
-padding: 2px 8px;
-align-items: center;
+			padding: 2px 8px;
+			align-items: center;
 		}`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > a:hover {
 			text-decoration: underline;
@@ -250,18 +250,16 @@ align-items: center;
 			display: none;
 		}`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} input[type="text"] {
-			background: #f2f2f2;
-color: #000;
-font-family: inherit;
-font-size: 9pt;
-appearance: none;
-width: 170px;
-outline: 0;
-border-left: solid 1px #00000038;
-border-right: solid 1px #00000038;
-border-top: 0;
-border-bottom: 0;
-padding: 0 10px;
+			background: var(--bg);
+			color: var(--color);
+			font-family: inherit;
+			font-size: 9pt;
+			appearance: none;
+			width: 120px;
+			outline: 0;
+			border: 0;
+			border-radius: 6px;
+			padding: 5px 8px;
 		}`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} input[type="color"] {
 			width: 38px;
@@ -292,17 +290,16 @@ padding: 0 10px;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > .button.profile {
 			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='176.8 162.88 398.4 426.23'%3E%3Cpath d='M479.4 266.29c0 57.105-46.293 103.4-103.4 103.4-57.102 0-103.39-46.293-103.39-103.4 0-57.102 46.293-103.39 103.39-103.39 57.105 0 103.4 46.293 103.4 103.39'/%3E%3Cpath d='M176.83 537.26c0 69.137 398.34 69.137 398.34 0 0-92.551-89.172-167.58-199.17-167.58s-199.17 75.027-199.17 167.58z' fill='%23000' /%3E%3C/svg%3E%0A");
 			background-size: 14px auto;
+			margin: 0 4px 0 0;
 		}`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > .button.save {
 			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='195.55 251.68 360.62 248.65'%3E%3Cpath d='M523.8 257.23 325.89 455.14l-98.27-89.98a18.94 18.94 0 0 0-13.723-5.238 18.941 18.941 0 0 0-11.852 33.18l111.62 102.25a18.941 18.941 0 0 0 26.187-.567l210.74-210.74v-.004a18.95 18.95 0 0 0 4.907-18.309 18.95 18.95 0 0 0-13.402-13.402 18.962 18.962 0 0 0-18.31 4.906z' fill='%23000' /%3E%3C/svg%3E%0A");
 			background-size: 16px auto;
+			margin: 0 0 0 4px;
 		}`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > .button.close {
 			background-image: url("data:image/svg+xml,%3Csvg viewBox='256.17 233.43 261.45 261.45' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m406.79 364.16 106.08-106.55c5.684-5.684 5.684-14.68 0-19.891-5.684-5.684-14.68-5.684-19.891 0l-106.08 106.56-106.55-106.56c-5.684-5.684-14.68-5.684-19.891 0-5.684 5.684-5.684 14.68 0 19.891l106.08 106.55-106.08 106.56c-5.684 5.684-5.684 14.68 0 19.891 2.84 2.84 6.629 4.262 9.945 4.262 3.317 0 7.106-1.422 9.946-4.262l106.55-106.55 106.55 106.55c2.84 2.84 6.628 4.262 9.945 4.262 3.316 0 7.105-1.422 9.945-4.262 5.684-5.684 5.684-14.68 0-19.891z' fill='%23000'/%3E%3C/svg%3E");
 			background-size: 14px auto;
-		}`;
-		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > .button:disabled {
-			opacity: 0.2;
 		}`;
 
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -325,9 +322,8 @@ padding: 0 10px;
 	}
 
 	hideControls() {
-		this.elements.containers.controls.style.setProperty('--top', '');
-		this.elements.containers.controls.style.setProperty('--left', '');
 		this.elements.containers.controls.setAttribute('aria-hidden', 'true');
+		this.elements.inputs.color.setAttribute('type', 'text');
 		this.isOpen = false;
 	}
 
@@ -335,10 +331,17 @@ padding: 0 10px;
 		const { left, top, height } = target.getBoundingClientRect();
 		const topRounded = (top + height).toFixed(0);
 		const leftRounded = left.toFixed(0);
+		this.elements.inputs.color.setAttribute('type', 'color');
 		this.elements.containers.controls.style.setProperty('--top', `${topRounded}px`);
 		this.elements.containers.controls.style.setProperty('--left', `${leftRounded}px`);
 		this.elements.containers.controls.setAttribute('aria-hidden', 'false');
 		this.isOpen = true;
+	}
+
+	updateControlInput(backgroundColor: string) {
+		const textColor = TaggingControls.luminance(backgroundColor) > 0.5 ? '#000' : '#FFF';
+		this.elements.inputs.label.style.setProperty('--bg', backgroundColor);
+		this.elements.inputs.label.style.setProperty('--color', textColor);
 	}
 
 	addEventListeners() {
@@ -360,7 +363,14 @@ padding: 0 10px;
 			}
 		});
 
-		// Handle clicks on
+		// Color updates
+		this.elements.inputs.color.addEventListener('input', (e) => {
+			const target = e.target as HTMLInputElement;
+			this.updateControlInput(target.value);
+		});
+
+		// Listen to all clicks which bubble up to the body
+		// and process those which are only a profile <a> tag.
 		document.body.addEventListener('click', (e) => {
 			if (e.target instanceof HTMLAnchorElement && typeof e.target.href === 'string' && e.target !== this.elements.links.profile) {
 				const u = new URL(e.target.href);
@@ -376,6 +386,7 @@ padding: 0 10px;
 						// Set 'view profile' link
 						this.elements.links.profile.href = e.target.href;
 						this.elements.inputs.color.value = existingColor;
+						this.updateControlInput(existingColor);
 
 						// Set existing tag
 						this.currentUsername = username;
