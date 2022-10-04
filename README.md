@@ -10,6 +10,6 @@
 
 ## Usage
 
-Whilst browsing Hacker News, any link which would normally link to a user's profile now when clicked will show new controls which allow the user to author their own tag and color.
+Whilst browsing Hacker News, click on a user's profile link to display the new tagging controls. You can author both a custom tag/label for the user, as well as select a colour for the label.
 
 Tags are stored locally within the Tampermonkey extension.
