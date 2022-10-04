@@ -358,7 +358,7 @@ export default class TaggingControls {
 			}
 		});
 
-		// Color updates
+		// Update input CSS variables whenever the color input changes value
 		this.elements.inputs.color.addEventListener('input', (e) => {
 			const target = e.target as HTMLInputElement;
 			this.updateControlInput(target.value);
