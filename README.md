@@ -6,7 +6,7 @@
 ### Firefox
 
 - Press the **Tampermonkey** extension button on your toolbar and select **Create New Script**
-- Copy and paste the contents of `script.js` into the newly opened tab and press **Save**
+- Copy and paste the contents of `dist/userscript.js` into the newly opened tab and press **Save**
 
 ## Usage
 
