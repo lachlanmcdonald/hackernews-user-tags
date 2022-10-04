@@ -87,9 +87,9 @@ class TaggingControls {
 
 	destroyControls() {
 		Object.keys(this.elements).forEach(k => {
-			if (k[e] && k[e].remove) {
-				k[e].remove();
-				k[e] = null;
+			if (this.elements[k] && this.elements[k].remove) {
+				this.elements[k].remove();
+				this.elements[k] = null;
 			}
 		});
 	}
