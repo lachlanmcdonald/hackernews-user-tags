@@ -110,7 +110,6 @@ class TaggingControls {
         const saveButton = document.createElement('button');
         const closeButton = document.createElement('button');
         controlNode.classList.add(TaggingControls.CSS_CONTROL_CLASS);
-        controlNode.setAttribute('aria-hidden', 'true');
         profileLink.setAttribute('title', 'View Profile');
         profileLink.classList.add('profile');
         profileLink.classList.add('button');
@@ -135,7 +134,6 @@ class TaggingControls {
         controlNode.appendChild(colorInputNodeContainer);
         controlNode.appendChild(saveButton);
         controlNode.appendChild(closeButton);
-        document.body.appendChild(controlNode);
         this.elements.containers.controls = controlNode;
         this.elements.links.profile = profileLink;
         this.elements.inputs.label = labelInput;
@@ -181,9 +179,6 @@ class TaggingControls {
         styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > a:hover {
 			text-decoration: underline;
 		}`;
-        styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS}[aria-hidden=true] {
-			display: none;
-		}`;
         styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} input[type="text"] {
 			background: var(--bg);
 			color: var(--color);
@@ -225,6 +220,7 @@ class TaggingControls {
         styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > .button.profile {
 			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='176.8 162.88 398.4 426.23'%3E%3Cpath d='M479.4 266.29c0 57.105-46.293 103.4-103.4 103.4-57.102 0-103.39-46.293-103.39-103.4 0-57.102 46.293-103.39 103.39-103.39 57.105 0 103.4 46.293 103.4 103.39'/%3E%3Cpath d='M176.83 537.26c0 69.137 398.34 69.137 398.34 0 0-92.551-89.172-167.58-199.17-167.58s-199.17 75.027-199.17 167.58z' fill='%23000' /%3E%3C/svg%3E%0A");
 			background-size: 14px auto;
+			margin: 0 4px 0 0;
 		}`;
         styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > .button.save {
 			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='195.55 251.68 360.62 248.65'%3E%3Cpath d='M523.8 257.23 325.89 455.14l-98.27-89.98a18.94 18.94 0 0 0-13.723-5.238 18.941 18.941 0 0 0-11.852 33.18l111.62 102.25a18.941 18.941 0 0 0 26.187-.567l210.74-210.74v-.004a18.95 18.95 0 0 0 4.907-18.309 18.95 18.95 0 0 0-13.402-13.402 18.962 18.962 0 0 0-18.31 4.906z' fill='%23000' /%3E%3C/svg%3E%0A");
@@ -251,18 +247,18 @@ class TaggingControls {
         }
     }
     hideControls() {
-        this.elements.containers.controls.setAttribute('aria-hidden', 'true');
-        this.elements.inputs.color.setAttribute('type', 'text');
+        if (this.elements.containers.controls.parentElement) {
+            this.elements.containers.controls = this.elements.containers.controls.parentElement.removeChild(this.elements.containers.controls);
+        }
         this.isOpen = false;
     }
     showControls(target) {
         const { left, top, height } = target.getBoundingClientRect();
         const topRounded = (top + height).toFixed(0);
         const leftRounded = left.toFixed(0);
-        this.elements.inputs.color.setAttribute('type', 'color');
         this.elements.containers.controls.style.setProperty('--top', `${topRounded}px`);
         this.elements.containers.controls.style.setProperty('--left', `${leftRounded}px`);
-        this.elements.containers.controls.setAttribute('aria-hidden', 'false');
+        document.body.appendChild(this.elements.containers.controls);
         this.isOpen = true;
     }
     updateControlInput(backgroundColor) {

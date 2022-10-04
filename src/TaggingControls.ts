@@ -165,7 +165,6 @@ export default class TaggingControls {
 		const closeButton = document.createElement('button');
 
 		controlNode.classList.add(TaggingControls.CSS_CONTROL_CLASS);
-		controlNode.setAttribute('aria-hidden', 'true');
 
 		profileLink.setAttribute('title', 'View Profile');
 		profileLink.classList.add('profile');
@@ -197,8 +196,6 @@ export default class TaggingControls {
 		controlNode.appendChild(colorInputNodeContainer);
 		controlNode.appendChild(saveButton);
 		controlNode.appendChild(closeButton);
-
-		document.body.appendChild(controlNode);
 
 		this.elements.containers.controls = controlNode as HTMLDivElement;
 		this.elements.links.profile = profileLink as HTMLAnchorElement;
@@ -245,9 +242,6 @@ export default class TaggingControls {
 		}`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} > a:hover {
 			text-decoration: underline;
-		}`;
-		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS}[aria-hidden=true] {
-			display: none;
 		}`;
 		styleNode.textContent += `.${TaggingControls.CSS_CONTROL_CLASS} input[type="text"] {
 			background: var(--bg);
@@ -322,8 +316,10 @@ export default class TaggingControls {
 	}
 
 	hideControls() {
-		this.elements.containers.controls.setAttribute('aria-hidden', 'true');
-		this.elements.inputs.color.setAttribute('type', 'text');
+		if (this.elements.containers.controls.parentElement) {
+			this.elements.containers.controls = this.elements.containers.controls.parentElement.removeChild(this.elements.containers.controls);
+		}
+
 		this.isOpen = false;
 	}
 
@@ -331,10 +327,9 @@ export default class TaggingControls {
 		const { left, top, height } = target.getBoundingClientRect();
 		const topRounded = (top + height).toFixed(0);
 		const leftRounded = left.toFixed(0);
-		this.elements.inputs.color.setAttribute('type', 'color');
 		this.elements.containers.controls.style.setProperty('--top', `${topRounded}px`);
 		this.elements.containers.controls.style.setProperty('--left', `${leftRounded}px`);
-		this.elements.containers.controls.setAttribute('aria-hidden', 'false');
+		document.body.appendChild(this.elements.containers.controls);
 		this.isOpen = true;
 	}
 
