@@ -11,20 +11,20 @@
 
 /*!
  * MIT License
- * 
+ *
  * Copyright (c) 2022 Lachlan McDonald <https://twitter.com/lachlanmcdonald>
  * https://github.com/lachlanmcdonald/hackernews-user-tags/
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,6 +40,7 @@ class TaggingControls {
 		this.elements = {};
 		this.currentUsername = null;
 		this.isOpen = false;
+		this.ownUsername = document.getElementById('me').textContent;
 		this.setup();
 	}
 
@@ -64,7 +65,7 @@ class TaggingControls {
 	}
 
 	applyTags() {
-		Array.from(document.querySelectorAll('a[href^="user?"]:not(#me)')).forEach(e => {
+		Array.from(document.querySelectorAll('a[href^="user?"]')).forEach(e => {
 			const u = new URL(e.href);
 			const username = u.searchParams.get('id');
 			if (this.tags.has(username)) {
@@ -265,20 +266,23 @@ class TaggingControls {
 
 				if (u.pathname === '/user' && u.searchParams.has('id')) {
 					const username = u.searchParams.get('id');
-					const existingLabel = this.tags.has(username) ? this.tags.get(username).label : "";
-					const existingColor = this.tags.has(username) ? this.tags.get(username).color || TaggingControls.DefaultBackground : TaggingControls.DefaultBackground;
-					e.preventDefault();
-					
-					// Set 'view profile' link
-					this.elements.profileNode.href = e.target.href;
-					this.elements.colorInputNode.value = existingColor;
 
-					// Set existing tag
-					this.currentUsername = username;
-					this.elements.tagInputNode.value = existingLabel;
+					if (username !== this.ownUsername) {
+						const existingLabel = this.tags.has(username) ? this.tags.get(username).label : "";
+						const existingColor = this.tags.has(username) ? this.tags.get(username).color || TaggingControls.DefaultBackground : TaggingControls.DefaultBackground;
+						e.preventDefault();
 
-					// Show controls
-					this.showControls(e.target);
+						// Set 'view profile' link
+						this.elements.profileNode.href = e.target.href;
+						this.elements.colorInputNode.value = existingColor;
+
+						// Set existing tag
+						this.currentUsername = username;
+						this.elements.tagInputNode.value = existingLabel;
+
+						// Show controls
+						this.showControls(e.target);
+					}
 				}
 			} else if (this.isOpen) {
 				let parentNode = e.target;
