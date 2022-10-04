@@ -367,43 +367,48 @@ export default class TaggingControls {
 		// Listen to all clicks which bubble up to the body
 		// and process those which are only a profile <a> tag.
 		document.body.addEventListener('click', (e) => {
-			if (e.target instanceof HTMLAnchorElement && typeof e.target.href === 'string' && e.target !== this.elements.links.profile) {
-				const u = new URL(e.target.href);
+			if (e.target) {
+				const target = e.target as HTMLElement;
+				const link = target.closest('a') as HTMLAnchorElement | null;
 
-				if (u.pathname === '/user' && u.searchParams.has('id')) {
-					const username = u.searchParams.get('id');
+				if (link && link !== this.elements.links.profile) {
+					const u = new URL(link.href);
 
-					if (typeof username === 'string' && username !== this.ownUsername) {
-						const existingLabel = this.tags.has(username) ? (this.tags.get(username) as UserTag).label || "" : "";
-						const existingColor = this.tags.has(username) ? (this.tags.get(username) as UserTag).color || TaggingControls.DEFAULT_BACKGROUND : TaggingControls.DEFAULT_BACKGROUND;
-						e.preventDefault();
+					if (u.pathname === '/user' && u.searchParams.has('id')) {
+						const username = u.searchParams.get('id');
 
-						// Set 'view profile' link
-						this.elements.links.profile.href = e.target.href;
-						this.elements.inputs.color.value = existingColor;
-						this.updateControlInput(existingColor);
+						if (typeof username === 'string' && username !== this.ownUsername) {
+							const existingLabel = this.tags.has(username) ? (this.tags.get(username) as UserTag).label || "" : "";
+							const existingColor = this.tags.has(username) ? (this.tags.get(username) as UserTag).color || TaggingControls.DEFAULT_BACKGROUND : TaggingControls.DEFAULT_BACKGROUND;
+							e.preventDefault();
 
-						// Set existing tag
-						this.currentUsername = username;
-						this.elements.inputs.label.value = existingLabel;
+							// Set 'view profile' link
+							this.elements.links.profile.href = link.href;
+							this.elements.inputs.color.value = existingColor;
+							this.updateControlInput(existingColor);
 
-						// Show controls
-						this.showControls(e.target);
+							// Set existing tag
+							this.currentUsername = username;
+							this.elements.inputs.label.value = existingLabel;
+
+							// Show controls
+							this.showControls(link);
+						}
 					}
-				}
-			} else if (this.isOpen) {
-				let parentNode = e.target as Node;
-				let withinControl = false;
+				} else if (this.isOpen) {
+					let parentNode = e.target as Node;
+					let withinControl = false;
 
-				while (parentNode) {
-					if (parentNode === this.elements.containers.controls) {
-						withinControl = true;
+					while (parentNode) {
+						if (parentNode === this.elements.containers.controls) {
+							withinControl = true;
+						}
+						parentNode = parentNode.parentNode as Node;
 					}
-					parentNode = parentNode.parentNode as Node;
-				}
 
-				if (withinControl === false) {
-					this.hideControls();
+					if (withinControl === false) {
+						this.hideControls();
+					}
 				}
 			}
 		});
