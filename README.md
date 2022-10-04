@@ -1,5 +1,6 @@
 # hackernews-user-tags
-[Tampermonkey](https://www.tampermonkey.net/) userscript to add functionality which allows the user to add a label/tag/flair on users shown throughout [Hacker News](https://news.ycombinator.com/).
+
+A [Tampermonkey](https://www.tampermonkey.net/) userscript which adds functionality allowing the user to add a custom coloured label/tag on usernames throughout [Hacker News](https://news.ycombinator.com/). 
 
 ## Installation
 
@@ -10,6 +11,12 @@
 
 ## Usage
 
-Whilst browsing Hacker News, click on a user's profile link to display the new tagging controls. You can author both a custom tag/label for the user, as well as select a colour for the label.
+Click a user's profile link to display the tagging controls. You can author both a custom label/tag for the user, as well as select a colour for the label.
 
-Tags are stored locally within the Tampermonkey extension.
+All data is stored locally.
+
+## Known issues
+
+**Color picker does not automatically close on Firefox**
+
+The `<input type="color">` UI on Firefox is a native UI contorl, and does not always honor changes to the page. There are not yet any known work-arounds.
