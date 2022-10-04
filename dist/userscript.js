@@ -5,7 +5,7 @@
 // @author       Lachlan McDonald <https://twitter.com/lachlanmcdonald>
 // @match        https://news.ycombinator.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=news.ycombinator.com
-// @updateURL    https://github.com/lachlanmcdonald/hackernews-user-tags/blob/dev/dist/userscript.js
+// @updateURL    https://raw.githubusercontent.com/lachlanmcdonald/hackernews-user-tags/main/dist/userscript.js
 // @grant        GM.getValue
 // @grant        GM.setValue
 // @run-at       document-idle
