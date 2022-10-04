@@ -1,5 +1,5 @@
 # hackernews-user-tags
-Tampermonkey userscript which adds the ability to add a user-defined label/tag/flair on a user, shown throughout Hacker News.
+[Tampermonkey](https://www.tampermonkey.net/) userscript to add functionality which allows the user to add a label/tag/flair on users shown throughout Hacker News.
 
 ## Installation
 
@@ -7,3 +7,7 @@ Tampermonkey userscript which adds the ability to add a user-defined label/tag/f
 
 - Press the **Tampermonkey** extension button on your toolbar and select **Create New Script**
 - Copy and paste the contents of `script.js` into the newly opened tab and press **Save**
+
+## Usage
+
+Whilst browsing Hacker News, any link which would normally link to a user's profile now once clicked will show a control panel, allowing the user to author their own tag and color.
