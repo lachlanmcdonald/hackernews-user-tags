@@ -1,4 +1,4 @@
-# hackernews-user-tags
+# Hacker News User Tags
 
 A [Tampermonkey](https://www.tampermonkey.net/) userscript which adds functionality allowing the user to add a custom coloured label/tag on usernames throughout [Hacker News](https://news.ycombinator.com/). 
 
