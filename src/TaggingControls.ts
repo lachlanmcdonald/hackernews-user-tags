@@ -1,7 +1,4 @@
-/* global GM */
-/* eslint-env es2019, browser */
-
-/*!
+/* !
  * MIT License
  *
  * Copyright (c) 2022 Lachlan McDonald <https://twitter.com/lachlanmcdonald>
@@ -26,6 +23,8 @@
  * SOFTWARE.
  */
 
+import STYLES from './style.scss';
+
 interface ElementMap {
 	containers: { [key: string]: HTMLDivElement},
 	links: { [key: string]: HTMLAnchorElement},
@@ -42,7 +41,7 @@ interface AnchorElementUsernameMap {
 	[key: string]: Array<HTMLAnchorElement>
 }
 
-export default class TaggingControls {
+export default abstract class TaggingControls {
 	tags: Map<string, UserTag>;
 	elements: ElementMap;
 	currentUsername: string|null;
@@ -100,17 +99,8 @@ export default class TaggingControls {
 		return (0.2126 * (r / 255)) + (0.7152 * (g / 255)) + (0.0722 * (b / 255));
 	}
 
-	load() {
-		return GM.getValue(TaggingControls.GM_KEY, '{}').then(data => {
-			this.tags = new Map(Object.entries(JSON.parse(data)));
-		});
-	}
-
-	save() {
-		const k = Object.fromEntries(this.tags.entries());
-
-		return GM.setValue(TaggingControls.GM_KEY, JSON.stringify(k));
-	}
+	abstract save(): Promise<void>;
+	abstract load(): Promise<void>;
 
 	setup() {
 		const ownProfileLink = document.getElementById('me');
@@ -222,7 +212,7 @@ export default class TaggingControls {
 		if (head) {
 			const styleNode = document.createElement('style');
 
-			styleNode.innerHTML = 'INJECT_CSS';
+			styleNode.innerHTML = STYLES;
 			head.appendChild(styleNode);
 		}
 	}
