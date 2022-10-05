@@ -7,6 +7,11 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
-  ]
+    "plugin:@typescript-eslint/recommended",
+    "@lachlanmcdonald/eslint-config-eslint"
+  ],
+  "rules": {
+    "spaced-comment": [ "warn", "always", { "markers": ["!", "=require", "=include"] } ],
+	"no-extra-parens": ["off"]
+  }
 }

@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"target": "es2019",
+		"module": "commonjs",
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noImplicitAny": true,
+		"sourceMap": false,
+		"rootDir": "src",
+		"lib": [
+			"es2019",
+			"dom"
+		]
+	}
+}
