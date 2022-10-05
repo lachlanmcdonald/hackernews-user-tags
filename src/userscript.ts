@@ -15,7 +15,7 @@
 
 //=require ./TaggingControls.ts
 
-(function() {
-	"use strict";
+(function () {
+	'use strict';
 	new TaggingControls(); // eslint-disable-line no-undef
-})();
+}());
