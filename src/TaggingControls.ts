@@ -43,7 +43,7 @@ interface AnchorElementUsernameMap {
 }
 
 export default class TaggingControls {
-	tags: Map<string,UserTag>;
+	tags: Map<string, UserTag>;
 	elements: ElementMap;
 	currentUsername: string|null;
 	isOpen: boolean;
@@ -70,16 +70,19 @@ export default class TaggingControls {
 
 	static rgbToHex(r: number, g: number, b:number) {
 		const k = [r, g, b].map(x => x.toString(16).padStart(2, '0'));
+
 		return `#${k.join()}`;
 	}
 
 	static hexToRgb(hex: string) {
-		const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-		hex = hex.replace(shorthandRegex, function(_m: string, r: string, g: string, b:string) {
+		const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/ui;
+
+		hex = hex.replace(shorthandRegex, (_m: string, r: string, g: string, b:string) => {
 			return [r, r, g, g, b, b].join('');
 		});
 
-		const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+		const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/ui.exec(hex);
+
 		return result ? {
 			r: parseInt(result[1], 16),
 			g: parseInt(result[2], 16),
@@ -92,8 +95,9 @@ export default class TaggingControls {
 	}
 
 	static luminance(hex: string) {
-		const { r, g, b} = TaggingControls.hexToRgb(hex);
-		return 0.2126 * (r / 255) + 0.7152 * (g / 255) + 0.0722 * (b / 255);
+		const { r, g, b } = TaggingControls.hexToRgb(hex);
+
+		return (0.2126 * (r / 255)) + (0.7152 * (g / 255)) + (0.0722 * (b / 255));
 	}
 
 	load() {
@@ -104,12 +108,14 @@ export default class TaggingControls {
 
 	save() {
 		const k = Object.fromEntries(this.tags.entries());
+
 		return GM.setValue(TaggingControls.GM_KEY, JSON.stringify(k));
 	}
 
 	setup() {
 		const ownProfileLink = document.getElementById('me');
-		this.ownUsername = ownProfileLink ? (ownProfileLink.textContent || "").trim() : null;
+
+		this.ownUsername = ownProfileLink ? (ownProfileLink.textContent || '').trim() : null;
 
 		this.load().then(() => {
 			this.addStyles();
@@ -190,8 +196,10 @@ export default class TaggingControls {
 		closeButton.classList.add('button');
 
 		const tagInputNodeContainer = document.createElement('div');
+
 		tagInputNodeContainer.appendChild(labelInput);
 		const colorInputNodeContainer = document.createElement('div');
+
 		colorInputNodeContainer.appendChild(colorInput);
 
 		controlNode.appendChild(profileLink);
@@ -210,6 +218,7 @@ export default class TaggingControls {
 
 	addStyles() {
 		const styleNode = document.createElement('style');
+
 		styleNode.textContent = `.${TaggingControls.CSS_CLASS}::after {
 			content: attr(data-tag);
 			display: inline-block;
@@ -306,8 +315,8 @@ export default class TaggingControls {
 	saveTag(username: string, label: string|null, color: string|null) {
 		if (username) {
 			this.tags.set(username, {
-				label: label === "" ? null : label,
-				color: color === "" ? null : color,
+				label: label === '' ? null : label,
+				color: color === '' ? null : color,
 			});
 
 			this.save().then(() => {
@@ -330,6 +339,7 @@ export default class TaggingControls {
 		const { left, top, height } = target.getBoundingClientRect();
 		const topRounded = (top + height + window.scrollY).toFixed(0);
 		const leftRounded = (left + window.scrollX).toFixed(0);
+
 		this.elements.containers.controls.style.setProperty('--top', `${topRounded}px`);
 		this.elements.containers.controls.style.setProperty('--left', `${leftRounded}px`);
 		document.body.appendChild(this.elements.containers.controls);
@@ -338,38 +348,41 @@ export default class TaggingControls {
 
 	updateControlInput(backgroundColor: string) {
 		const textColor = TaggingControls.luminance(backgroundColor) > 0.5 ? '#000' : '#FFF';
+
 		this.elements.inputs.label.style.setProperty('--bg', backgroundColor);
 		this.elements.inputs.label.style.setProperty('--color', textColor);
 	}
 
 	addEventListeners() {
 		// Close button
-		this.elements.button.close.addEventListener('click', (e) => {
+		this.elements.button.close.addEventListener('click', e => {
 			this.hideControls();
 			e.preventDefault();
 		});
 
 		// Save button
-		this.elements.button.save.addEventListener('click', (e) => {
+		this.elements.button.save.addEventListener('click', e => {
 			e.preventDefault();
 			this.hideControls();
 
 			if (this.currentUsername) {
 				const label = this.elements.inputs.label.value.trim();
 				const color = this.elements.inputs.color.value;
-				this.saveTag(this.currentUsername, label, color)
+
+				this.saveTag(this.currentUsername, label, color);
 			}
 		});
 
 		// Update input CSS variables whenever the color input changes value
-		this.elements.inputs.color.addEventListener('input', (e) => {
+		this.elements.inputs.color.addEventListener('input', e => {
 			const target = e.target as HTMLInputElement;
+
 			this.updateControlInput(target.value);
 		});
 
 		// Listen to all clicks which bubble up to the body
 		// and process those which are only a profile <a> tag.
-		document.body.addEventListener('click', (e) => {
+		document.body.addEventListener('click', e => {
 			if (e.target) {
 				const target = e.target as HTMLElement;
 				const link = target.closest('a') as HTMLAnchorElement | null;
@@ -381,8 +394,9 @@ export default class TaggingControls {
 						const username = u.searchParams.get('id');
 
 						if (typeof username === 'string' && username !== this.ownUsername) {
-							const existingLabel = this.tags.has(username) ? (this.tags.get(username) as UserTag).label || "" : "";
+							const existingLabel = this.tags.has(username) ? (this.tags.get(username) as UserTag).label || '' : '';
 							const existingColor = this.tags.has(username) ? (this.tags.get(username) as UserTag).color || TaggingControls.DEFAULT_BACKGROUND : TaggingControls.DEFAULT_BACKGROUND;
+
 							e.preventDefault();
 
 							// Set 'view profile' link
