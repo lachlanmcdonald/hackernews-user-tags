@@ -4,9 +4,9 @@ import { terser } from 'rollup-plugin-terser';
 
 const BANNER = `
 // ==UserScript==
-// @name         HackerNews Tag User
-// @version      0.3
-// @description  Add custom tags/flair to a user on HackerNews
+// @name         Hacker News User Tags
+// @version      0.4
+// @description  Allows the user to add a custom coloured label/tag on usernames throughout Hacker News.
 // @author       Lachlan McDonald <https://twitter.com/lachlanmcdonald>
 // @match        https://news.ycombinator.com/*
 // @icon         https://news.ycombinator.com/favicon.ico
