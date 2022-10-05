@@ -2,7 +2,6 @@ const gulp = require('gulp');
 const ts = require('gulp-typescript');
 const include = require('gulp-include');
 const replace = require('gulp-replace');
-const uglify = require('gulp-uglify');
 
 const USERSCRIPT_TS_SOURCE = './src/userscript.ts';
 
