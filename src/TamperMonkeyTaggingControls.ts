@@ -46,6 +46,6 @@ export default class TamperMonkeyTaggingControls extends TaggingControls {
 
 		await GM.setValue(TaggingControls.GM_KEY, JSON.stringify(data));
 
-		this.tags = new Map(data);
+		this.tags = new Map(Object.entries(data));
 	}
 }
