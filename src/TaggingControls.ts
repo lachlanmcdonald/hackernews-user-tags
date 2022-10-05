@@ -1,3 +1,5 @@
+/* eslint-env es2019, browser */
+
 /* !
  * MIT License
  *
