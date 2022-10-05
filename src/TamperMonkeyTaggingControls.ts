@@ -28,15 +28,24 @@
 import TaggingControls from './TaggingControls';
 
 export default class TamperMonkeyTaggingControls extends TaggingControls {
-	load() {
-		return GM.getValue(TaggingControls.GM_KEY, '{}').then(data => {
-			this.tags = new Map(Object.entries(JSON.parse(data)));
-		});
+	async load() {
+		const data = await GM.getValue(TaggingControls.GM_KEY, '{}');
+
+		this.tags = new Map(Object.entries(JSON.parse(data)));
 	}
 
-	save() {
-		const k = Object.fromEntries(this.tags.entries());
+	async save() {
+		// Attempt to haphazardly merge existing data with the new data to avoid a
+		// situation where the userscript, running across multiple tabs, overwrites eachother.
+		const existingData = await GM.getValue(TaggingControls.GM_KEY, '{}');
 
-		return GM.setValue(TaggingControls.GM_KEY, JSON.stringify(k));
+		const data = {
+			...JSON.parse(existingData),
+			...Object.fromEntries(this.tags.entries()),
+		};
+
+		await GM.setValue(TaggingControls.GM_KEY, JSON.stringify(data));
+
+		this.tags = new Map(data);
 	}
 }

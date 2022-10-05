@@ -225,9 +225,7 @@ export default abstract class TaggingControls {
 			});
 
 			this.save().then(() => {
-				this.load().then(() => {
-					this.applyTags();
-				});
+				this.applyTags();
 			});
 		}
 	}
