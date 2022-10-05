@@ -4,7 +4,7 @@
 // @description  Add custom tags/flair to a user on HackerNews
 // @author       Lachlan McDonald <https://twitter.com/lachlanmcdonald>
 // @match        https://news.ycombinator.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=news.ycombinator.com
+// @icon         https://news.ycombinator.com/favicon.ico
 // @updateURL    https://raw.githubusercontent.com/lachlanmcdonald/hackernews-user-tags/main/dist/userscript.js
 // @grant        GM.getValue
 // @grant        GM.setValue
