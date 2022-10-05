@@ -27,8 +27,7 @@ export default {
 	plugins: [
 		scss({
 			output: false,
-			processor: css => css.replace(/(?<=[}{;])\s+/gm, ''),
-
+			processor: css => css.replace(/(?<=[}{;])\s+/gum, ''),
 		}),
 		typescript(),
 		terser({
