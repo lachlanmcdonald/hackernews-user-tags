@@ -17,4 +17,4 @@ All data is stored locally.
 
 **Color picker does not automatically close on Firefox**
 
-The `<input type="color">` UI on Firefox is a native UI contorl, and does not always honor changes to the page. There are not yet any known work-arounds.
+The `<input type="color">` element in Firefox uses device-native UI controls, which does not always honor changes to the page. There are not any known work-arounds, and the color picker will need to be closed manually.
