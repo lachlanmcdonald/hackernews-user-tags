@@ -1,5 +1,7 @@
 # Hacker News User Tags
 
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)][license-link]
+
 **Hacker News User Tags** is a [Tampermonkey](https://www.tampermonkey.net/) userscript which allows the user to associate a custom coloured label/tag on usernames throughout [Hacker News](https://news.ycombinator.com/).
 
 ## Installation
@@ -18,3 +20,5 @@ All data is stored locally.
 **Color picker does not automatically close on Firefox**
 
 The `<input type="color">` element in Firefox uses device-native UI controls, which does not always honor changes to the page. There are not any known work-arounds, and the color picker will need to be closed manually.
+
+[license-link]: https://github.com/lachlanmcdonald/hackernews-user-tags/blob/main/LICENSE
