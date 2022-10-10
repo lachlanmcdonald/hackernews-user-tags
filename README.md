@@ -6,8 +6,8 @@
 
 ## Installation
 
-1. Press the **Tampermonkey** extension button on your browser's toolbar and select **Create New Script**
-2. Copy and paste the contents of [`dist/userscript.js`](https://raw.githubusercontent.com/lachlanmcdonald/hackernews-user-tags/main/dist/userscript.js) into the newly opened tab and press **Save**
+1. Press the **Tampermonkey** extension button on your browser's toolbar and select **Create a new script**
+2. Copy and paste the contents of [`dist/userscript.js`](https://raw.githubusercontent.com/lachlanmcdonald/hackernews-user-tags/main/dist/userscript.js) into the newly opened tab, and press **Save**
 
 ## Usage
 
