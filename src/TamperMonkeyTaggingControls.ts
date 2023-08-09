@@ -1,7 +1,7 @@
 /* eslint-env es2019, browser */
 /* global GM */
 
-/* !
+/*
  * MIT License
  *
  * Copyright (c) 2022 Lachlan McDonald <https://twitter.com/lachlanmcdonald>

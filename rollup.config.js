@@ -1,20 +1,23 @@
 import typescript from '@rollup/plugin-typescript';
 import scss from 'rollup-plugin-scss';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
+import fs from 'fs';
+
+const packageJSON = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 
 const BANNER = `
 // ==UserScript==
 // @name         Hacker News User Tags
-// @version      0.4
-// @description  Allows the user to add a custom coloured label/tag on usernames throughout Hacker News.
-// @author       Lachlan McDonald <https://twitter.com/lachlanmcdonald>
+// @version      ${packageJSON.version}
+// @description  Allows the user to associate a custom coloured label/tag on usernames throughout Hacker News.
+// @author       ${packageJSON.author}
 // @match        https://news.ycombinator.com/*
 // @icon         https://news.ycombinator.com/favicon.ico
 // @updateURL    https://raw.githubusercontent.com/lachlanmcdonald/hackernews-user-tags/main/dist/userscript.js
 // @grant        GM.getValue
 // @grant        GM.setValue
 // @run-at       document-idle
-// @license      MIT
+// @license      ${packageJSON.license}
 // @noframes
 // ==/UserScript==`;
 
