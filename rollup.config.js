@@ -14,6 +14,7 @@ const BANNER = `
 // @match        https://news.ycombinator.com/*
 // @icon         https://news.ycombinator.com/favicon.ico
 // @updateURL    https://raw.githubusercontent.com/lachlanmcdonald/hackernews-user-tags/main/dist/userscript.js
+// @downloadURL  https://raw.githubusercontent.com/lachlanmcdonald/hackernews-user-tags/main/dist/userscript.js
 // @grant        GM.getValue
 // @grant        GM.setValue
 // @run-at       document-idle

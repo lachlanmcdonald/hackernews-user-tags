@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Hacker News User Tags
-// @version      0.0.3
+// @version      0.0.4
 // @description  Allows the user to associate a custom coloured label/tag on usernames throughout Hacker News.
 // @author       Lachlan McDonald <https://github.com/lachlanmcdonald>
 // @match        https://news.ycombinator.com/*
 // @icon         https://news.ycombinator.com/favicon.ico
 // @updateURL    https://raw.githubusercontent.com/lachlanmcdonald/hackernews-user-tags/main/dist/userscript.js
+// @downloadURL  https://raw.githubusercontent.com/lachlanmcdonald/hackernews-user-tags/main/dist/userscript.js
 // @grant        GM.getValue
 // @grant        GM.setValue
 // @run-at       document-idle
