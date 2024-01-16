@@ -170,6 +170,7 @@ export default abstract class TaggingControls {
 		profileLink.setAttribute('title', 'View Profile');
 		profileLink.classList.add('profile');
 		profileLink.classList.add('button');
+		profileLink.textContent = '👤';
 
 		colorInput.setAttribute('type', 'color');
 
@@ -181,11 +182,13 @@ export default abstract class TaggingControls {
 		saveButton.setAttribute('title', 'Save');
 		saveButton.classList.add('save');
 		saveButton.classList.add('button');
+		saveButton.textContent = '✅';
 
 		closeButton.setAttribute('type', 'button');
 		closeButton.setAttribute('title', 'Close');
 		closeButton.classList.add('close');
 		closeButton.classList.add('button');
+		closeButton.textContent = '❌';
 
 		const tagInputNodeContainer = document.createElement('div');
 
