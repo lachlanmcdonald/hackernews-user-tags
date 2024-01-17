@@ -26,6 +26,7 @@
  */
 
 import STYLES from './style.scss';
+import { BUTTON_PROFILE, BUTTON_SAVE, BUTTON_CLOSE } from './svgs';
 
 interface ElementMap {
 	containers: { [key: string]: HTMLDivElement},
@@ -158,40 +159,45 @@ export default abstract class TaggingControls {
 	}
 
 	createControls() {
-		const controlNode = document.createElement('div');
-		const profileLink = document.createElement('a');
-		const labelInput = document.createElement('input');
-		const colorInput = document.createElement('input');
-		const saveButton = document.createElement('button');
-		const closeButton = document.createElement('button');
+		const controlNode = Object.assign(document.createElement('div'), {
+			className: TaggingControls.CSS_CONTROL_CLASS,
+		});
 
-		controlNode.classList.add(TaggingControls.CSS_CONTROL_CLASS);
+		const profileLink = Object.assign(document.createElement('a'), {
+			title: 'View Profile',
+			className: 'button profile',
+		});
 
-		profileLink.setAttribute('title', 'View Profile');
-		profileLink.classList.add('profile');
-		profileLink.classList.add('button');
+		const saveButton = Object.assign(document.createElement('button'), {
+			type: 'button',
+			title: 'Save',
+			className: 'button save',
+		});
 
-		colorInput.setAttribute('type', 'color');
+		const closeButton = Object.assign(document.createElement('button'), {
+			type: 'button',
+			title: 'Close',
+			className: 'button close',
+		});
 
-		labelInput.setAttribute('type', 'text');
-		labelInput.setAttribute('placeholder', 'Tag');
-		labelInput.setAttribute('maxlength', '16');
+		const labelInput = Object.assign(document.createElement('input'), {
+			type: 'text',
+			placeholder: 'Tag',
+			maxlength: '16',
+		});
 
-		saveButton.setAttribute('type', 'button');
-		saveButton.setAttribute('title', 'Save');
-		saveButton.classList.add('save');
-		saveButton.classList.add('button');
+		const colorInput = Object.assign(document.createElement('input'), {
+			type: 'color',
+		});
 
-		closeButton.setAttribute('type', 'button');
-		closeButton.setAttribute('title', 'Close');
-		closeButton.classList.add('close');
-		closeButton.classList.add('button');
+		profileLink.innerHTML = BUTTON_PROFILE;
+		saveButton.innerHTML = BUTTON_SAVE;
+		closeButton.innerHTML = BUTTON_CLOSE;
 
 		const tagInputNodeContainer = document.createElement('div');
-
-		tagInputNodeContainer.appendChild(labelInput);
 		const colorInputNodeContainer = document.createElement('div');
 
+		tagInputNodeContainer.appendChild(labelInput);
 		colorInputNodeContainer.appendChild(colorInput);
 
 		controlNode.appendChild(profileLink);
