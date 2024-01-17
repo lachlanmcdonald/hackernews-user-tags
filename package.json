@@ -1,6 +1,6 @@
 {
   "name": "hackernews-user-tags",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A Tampermonkey userscript which allows the user to associate a custom coloured label/tag on usernames throughout Hacker News.",
   "main": "script.js",
   "type": "module",
